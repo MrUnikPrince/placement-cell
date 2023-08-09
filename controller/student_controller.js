@@ -1,13 +1,14 @@
 const Student = require("../models/student");
+const Interview = require('../models/interview');
 
 // add student
 module.exports.addStudent = (req, res) => {
-
     return res.render("add_student", {
         title: "Add Student",
     });
 };
 
+// create a student
 module.exports.createStudent = async (req, res) => {
     try {
         const {
@@ -43,7 +44,9 @@ module.exports.createStudent = async (req, res) => {
         console.log('Error in Adding Student data');
     }
 }
-// read student
+
+
+// update form 
 module.exports.editStudent = async (req, res) => {
     const student = await Student.findById(req.params.id);
     return res.render("edit_student", {
@@ -52,6 +55,7 @@ module.exports.editStudent = async (req, res) => {
     });
 }
 
+// update student
 module.exports.updateStudent = async (req, res) => {
     try {
         const student = await Student.findById(req.params.id);
@@ -86,6 +90,32 @@ module.exports.updateStudent = async (req, res) => {
 
 
 // delete student
-module.exports.delete = async (req,res) => {
+module.exports.delete = async (req, res) => {
+    try {
+        const { studentId } = req.params;
+        console.log(studentId)
+        const student = await Student.findById(studentId);
 
+        // if there is no student
+        if (!student) {
+            console.log('Student not found');
+            return;
+        }
+        const interviewsOfStudent = student.interviews;
+
+        // delete reference of student from companies 
+        if (interviewsOfStudent.length > 0) {
+            for (let interview of interviewsOfStudent) {
+                await Interview.findOneAndUpdate(
+                    { company: interview.company },
+                    { $pull: { students: { student: studentId } } }
+                );
+            }
+        }
+        await student.deleteOne();   // delete student 
+        return res.redirect("back");
+    } catch (err) {
+        console.log("Error in deleting Student", err);
+        return;
+    }
 }
