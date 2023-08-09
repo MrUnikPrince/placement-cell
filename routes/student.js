@@ -8,6 +8,14 @@ router.get('/add', studentController.addStudent);
 
 router.post('/add',studentController.createStudent); 
 
-router.get('/read', studentController.readStudent);
+// read student
+// router.get('/read', studentController.readStudent);
 
+// update student
+router.get('/edit/:id', studentController.editStudent);
+
+router.post('/update/:id', studentController.updateStudent);
+
+// delete student
+router.get('/delete/:studentId', studentController.delete);
 module.exports = router;

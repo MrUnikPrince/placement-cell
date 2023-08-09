@@ -44,6 +44,48 @@ module.exports.createStudent = async (req, res) => {
     }
 }
 // read student
-module.exports.readStudent = (req, res) => {
+module.exports.editStudent = async (req, res) => {
+    const student = await Student.findById(req.params.id);
+    return res.render("edit_student", {
+        title: "Edit Student",
+        student_details: student,
+    });
+}
+
+module.exports.updateStudent = async (req, res) => {
+    try {
+        const student = await Student.findById(req.params.id);
+        const {
+            name,
+            college,
+            batch,
+            dsa_score,
+            react_score,
+            webdev_score,
+            placementStatus,
+        } = req.body;
+
+        if (!student) {
+            return res.redirect("back");
+        }
+        student.name = name;
+        student.college = college;
+        student.batch = batch;
+        student.dsa_score = dsa_score;
+        student.react_score = react_score;
+        student.webdev_score = webdev_score;
+        student.placementStatus = placementStatus;
+
+        student.save();
+        return res.redirect("/dashboard");
+    } catch (err) {
+        console.log('error in updating Student');
+        return res.redirect('back');
+    }
+}
+
+
+// delete student
+module.exports.delete = async (req,res) => {
 
 }
