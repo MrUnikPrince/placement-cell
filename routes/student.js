@@ -4,8 +4,9 @@ const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
 const studentController = require('../controller/student_controller');
 // add student
-
 router.get('/add', studentController.addStudent);
+
+router.post('/add',studentController.createStudent); 
 
 router.get('/read', studentController.readStudent);
 
