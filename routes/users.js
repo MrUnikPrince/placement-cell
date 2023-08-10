@@ -19,7 +19,7 @@ router.post('/sign-up', usersController.register);
 router.post('/sign-in', usersController.signInSession);
 
 // log -out 
-router.get('/sign-out', usersController.logOut);
+router.get('/sign-out', ensureAuthenticated, usersController.logOut);
 
 
 // reset 

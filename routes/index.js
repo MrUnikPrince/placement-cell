@@ -9,9 +9,15 @@ router.get('/' , mainController.home);
 router.get('/dashboard', ensureAuthenticated , mainController.dashboard);
 
 
-
+// users routes
 router.use('/users', require('./users'));
+
+// students routes
 router.use('/student', require('./student'));
+
+// interview routes
+router.use("/interview", require("./interview"));
+
 
 
 

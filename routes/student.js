@@ -2,20 +2,20 @@ const router = require('express').Router();
 // const passport = require('passport')
 const { ensureAuthenticated, forwardAuthenticated } = require('../config/auth');
 
-const studentController = require('../controller/student_controller');
-// add student
-router.get('/add', studentController.addStudent);
+const studentController = require('../controller/student_controller');    // student controller
 
+// view add student for,
+router.get('/add',ensureAuthenticated, studentController.addStudent);
+
+// get the data and store it in the database
 router.post('/add',studentController.createStudent); 
 
-// read student
-// router.get('/read', studentController.readStudent);
+// view update student  form
+router.get('/edit/:id', ensureAuthenticated, studentController.editStudent);
 
-// update student
-router.get('/edit/:id', studentController.editStudent);
-
-router.post('/update/:id', studentController.updateStudent);
+// update student and store it in the database
+router.post('/update/:id', ensureAuthenticated, studentController.updateStudent);
 
 // delete student
-router.get('/delete/:studentId', studentController.delete);
+router.get('/delete/:studentId', ensureAuthenticated, studentController.delete);
 module.exports = router;
