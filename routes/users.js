@@ -30,4 +30,7 @@ router.post('/reset', ensureAuthenticated, usersController.getEmail);
 // reset password
 // router.get('/reset-password', ensureAuthenticated, usersController.resetPassword);
 router.post('/reset-password', usersController.updatePassword);
+router.get("/download", ensureAuthenticated, usersController.downloadCSVReport);
+
+// downloading CSV Reports
 module.exports = router;
