@@ -111,3 +111,33 @@ module.exports.deallocate = async (req, res) => {
         console.log("error", "Couldn't deallocate from interview");
     }
 };
+
+//
+module.exports.delete = async (req, res) => {
+    try {
+        const { interviewId } = req.params;
+        const interview = await Interview.findById(interviewId);
+
+        if (!interview) {
+            console.log('Interview not found');
+            return res.status(404).send('Interview not found');
+        }
+
+        const studentsOfInterview = interview.students;
+
+        if (studentsOfInterview.length > 0) {
+            for (let student of studentsOfInterview) {
+                await Student.findOneAndUpdate(
+                    { _id: student.student },
+                    { $pull: { interviews: { interview: interviewId } } }
+                );
+            }
+        }
+
+        await interview.deleteOne();
+        return res.redirect("back");
+    } catch (err) {
+        console.log("Error in deleting Interview", err);
+        return res.status(500).send("Error deleting interview");
+    }
+};
