@@ -29,7 +29,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: '', // Enter your DB url
+        mongoUrl:"mongodb+srv://UniquePrince:32323212@cluster0.sezsu7p.mongodb.net/?retryWrites=true&w=majority", // Enter your DB url
         autoRemove: 'disabled'
     })
 }));
