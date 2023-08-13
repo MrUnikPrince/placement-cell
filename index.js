@@ -5,6 +5,8 @@ const expressLayouts = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const MongoStore = require('connect-mongo');
+
 const app = express();
 
 //config Passport
@@ -25,7 +27,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({
     secret: 'too secret',
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: '[Enter Your DB URl]', // Enter your DB url
+        autoRemove: 'disabled'
+    })
 }));
 
 //Passport middleware

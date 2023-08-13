@@ -45,42 +45,13 @@ module.exports = (passport) => {
 
 }
 
-// google auth strategy
-// passport.use(new GoogleStrategy({
-//     clientID: process.env.CLIENT_ID,
-//     clientSecret: process.env.SECRET,
-//     callbackURL: "http://localhost:8000/google/callback"
-//   },
-//   async function(accessToken, refreshToken, profile, done) {
-//     try{
-//         console.log(profile);
-//         const user = await User.findOne({email: profile.emails[0].value});
-//         if(user){
-//         console.log(user);
-//             return done(null, user);
-//         } else{
-//         const newUser = await User.create({
-//                 name: profile.displayName,
-//                 email: profile.emails[0].value,
-//                 password: crypto.randomBytes(20).toString('hex')
-//             });
-//         console.log(newUser);
-//             return done(null, newUser);
-//         }
-//     }catch(err){
-//         console.log('error in the google auth : ' , err);
-//         return done(null, false, { message: ' That email is not registered: Google ' });
-//     }
-//   }
-// ));
-// serializer function
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
+// passport.serializeUser((user, done) => {
+//     done(null, user);
+// });
 
-// deserializeUser function
-passport.deserializeUser(function(user, cb) {
-   cb(null, user);
-});
+// // deserializeUser function
+// passport.deserializeUser(function(user, cb) {
+//    cb(null, user);
+// });
 
 
