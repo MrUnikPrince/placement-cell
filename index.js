@@ -29,7 +29,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-        mongoUrl: '[Enter Your DB URl]', // Enter your DB url
+        mongoUrl: '', // Enter your DB url
         autoRemove: 'disabled'
     })
 }));
